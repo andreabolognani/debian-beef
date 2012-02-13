@@ -1,0 +1,355 @@
+commit 7f53cf31c12f216ef55e372d4b677c97d111cadd
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sat Apr 9 15:39:46 2011 +0200
+
+    === Release 1.0.0 ===
+
+commit df58f375a0ce06a027b7a8f3fa9dc57ca82c9a78
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sat Apr 9 15:39:19 2011 +0200
+
+    Bump version number.
+
+ configure.ac |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit b1cd2990f03cee39e6b7f4d989cb82716ed58fb2
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sat Apr 9 15:38:45 2011 +0200
+
+    Don't install HACKING and INSTALL.
+
+ Makefile.am |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit afb1b17eb6b03f0a5b9006a06009327c572b0549
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sat Apr 9 11:32:30 2011 +0200
+
+    Use readline only if input is a terminal.
+
+ src/main.c |   23 +++++++++++++++--------
+ 1 files changed, 15 insertions(+), 8 deletions(-)
+
+commit a8914dfffc621d921952ae525e51dac2ec362ea8
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Apr 8 21:59:10 2011 +0200
+
+    Update and improve README.
+
+ README |   50 ++++++++++++++++++++------------------------------
+ 1 files changed, 20 insertions(+), 30 deletions(-)
+
+commit 9cba6db294f2987cc50db283b25cc538ad32bcd2
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Apr 8 21:52:59 2011 +0200
+
+    Note in the man page that `-' can be used.
+
+ doc/beef.1.text.in |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit 86ae30936ec1c511c06d2571c704d68d74105729
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Apr 8 21:44:40 2011 +0200
+
+    Use a better error message when FILE is missing.
+
+ src/main.c |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+commit 9523caca7b0faca3052e420993693d077bf63e72
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Apr 8 21:39:42 2011 +0200
+
+    Automatically insert version number in man page.
+
+ configure.ac       |    1 +
+ doc/Makefile.am    |    5 +--
+ doc/beef.1.text    |  102 ----------------------------------------------------
+ doc/beef.1.text.in |  102 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 105 insertions(+), 105 deletions(-)
+
+commit 98a58b769d87ee11a75093643f5234da2b9ef196
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Apr 8 21:32:07 2011 +0200
+
+    Improve ChangeLog generation rules.
+
+ Makefile.am |   28 +++++++---------------------
+ 1 files changed, 7 insertions(+), 21 deletions(-)
+
+commit e9b61913f584d20faac0498328ea35a7ee8e55e7
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Apr 8 21:27:04 2011 +0200
+
+    Build man page whenever the source changes.
+
+ doc/Makefile.am |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+
+commit 35ea31d22610584e0235dd433fb19e4798c64c83
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Apr 8 21:23:39 2011 +0200
+
+    Don't unconditionally build man page.
+    
+    If Pandoc is not found at build time, just show a warning and
+    install the man page that was shipped with the release.
+
+ doc/Makefile.am |   13 ++++++-------
+ 1 files changed, 6 insertions(+), 7 deletions(-)
+
+commit 1ee774705cb474425df5a4e726fada05b444e3ea
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Apr 8 19:30:00 2011 +0200
+
+    Expand man page.
+
+ doc/beef.1.text |   66 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 65 insertions(+), 1 deletions(-)
+
+commit 774d2fbb42880a7aa4efa53f8cb66e64c0b82d17
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Mar 25 21:49:59 2011 +0100
+
+    Add INSTALL and HACKING.
+
+ HACKING     |    8 ++++++++
+ INSTALL     |   12 ++++++++++++
+ Makefile.am |    2 ++
+ 3 files changed, 22 insertions(+), 0 deletions(-)
+
+commit 9a419def3ab334049760a18e01af699b7f744c8e
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Mar 25 21:40:16 2011 +0100
+
+    Improve and update NEWS file.
+
+ NEWS |   70 ++++++++++++++++++++++++++++++++++++++++++-----------------------
+ 1 files changed, 45 insertions(+), 25 deletions(-)
+
+commit 53c3104d04ec061582dd5dfdeee07842d5c6aa77
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Mar 25 21:09:30 2011 +0100
+
+    Use a convenience function to access option entries.
+
+ src/main.c    |    3 ++-
+ src/options.c |   16 +++++++++++++---
+ src/options.h |    4 +---
+ 3 files changed, 16 insertions(+), 7 deletions(-)
+
+commit 41b915387f4f8aec8ccec95d69883f5f400362dd
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Mar 20 22:33:28 2011 +0100
+
+    Create and install ChangeLog.
+
+ Makefile.am |   28 ++++++++++++++++++++++++++++
+ 1 files changed, 28 insertions(+), 0 deletions(-)
+
+commit 329d800e096393661727fc5cf233cffde5dcd131
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Mar 20 22:29:08 2011 +0100
+
+    Install documentation.
+
+ AUTHORS     |    1 +
+ COPYING     |  339 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Makefile.am |    8 ++-
+ 3 files changed, 347 insertions(+), 1 deletions(-)
+
+commit e19635e6dca1288a2a1d13a1eee1346e1711624a
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Mar 20 22:22:46 2011 +0100
+
+    Reorder options and improve wording.
+
+ src/options.c |   38 +++++++++++++++++++-------------------
+ 1 files changed, 19 insertions(+), 19 deletions(-)
+
+commit e2f0bc6637fed79e53e748011e7dba0a2540e63b
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Mar 20 22:07:20 2011 +0100
+
+    Mark the -d option as allowing no args.
+
+ src/options.c |   32 +++-----------------------------
+ 1 files changed, 3 insertions(+), 29 deletions(-)
+
+commit 41e381179c27fc443a3746defd507dc17e6f2973
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Mar 20 21:48:58 2011 +0100
+
+    Replace man page.
+    
+    The new man page is written in Markdown, and converted to
+    man format using Pandoc.
+
+ Makefile.am     |    1 +
+ beef.1          |   56 -------------------------------------------------------
+ configure.ac    |    3 ++
+ doc/Makefile.am |   24 +++++++++++++++++++++++
+ doc/beef.1.text |   38 +++++++++++++++++++++++++++++++++++++
+ 5 files changed, 66 insertions(+), 56 deletions(-)
+
+commit c5235388181cb1ff8eb68c690adf9cadd7d4cadb
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Wed Mar 16 00:09:01 2011 +0100
+
+    Fix long option name.
+
+ src/options.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 9e55e06f82f8bc5d464604d6f44b997055399b53
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Tue Mar 15 18:00:35 2011 +0100
+
+    Reset the prompt after input.
+
+ src/io.c |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+commit 7294cbbc4ef254bac50f3589eb39f01b71ec7e77
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Tue Mar 15 00:03:42 2011 +0100
+
+    Make readline interact nicely with program's output.
+
+ src/io.c   |   72 +++++++++++++++++++++++++++++++++++++++++++++++++----------
+ src/main.c |   13 ++++++----
+ 2 files changed, 67 insertions(+), 18 deletions(-)
+
+commit a9f3b753f9fdddd96b469688cf5b6019f90d60a2
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Mon Mar 14 21:35:10 2011 +0100
+
+    Disable filename completion on TAB.
+
+ src/main.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+commit e783342068b6cd318456cabc2241e03605695bb5
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Mon Mar 14 14:21:00 2011 +0100
+
+    Use readline for interactive input.
+
+ configure.ac |    9 +++++++++
+ src/io.c     |   36 ++++++++++++++++++++++++++++++++++++
+ src/io.h     |   21 ++++++++++++---------
+ src/main.c   |    7 +++++++
+ 4 files changed, 64 insertions(+), 9 deletions(-)
+
+commit 41978da1ea8f9857857106aab864b6b2dbea3870
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Mar 13 21:53:04 2011 +0100
+
+    Release all resources.
+
+ src/main.c |   74 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 72 insertions(+), 2 deletions(-)
+
+commit 9cf11f808b1dd8077efabc3e098ecab60e55de8b
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Mar 13 21:32:11 2011 +0100
+
+    Support input from a file.
+
+ src/io.c      |   58 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/io.h      |    3 ++
+ src/main.c    |   35 ++++++++++++++++++++++++++++++++++
+ src/options.c |   39 +++++++++++++++++++++++++++++++++++++-
+ src/options.h |    3 +-
+ 5 files changed, 136 insertions(+), 2 deletions(-)
+
+commit a0628c31aa3c69a358b7352d4a7f064ea90bd100
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Mar 13 20:54:50 2011 +0100
+
+    Support output to a file.
+
+ src/io.c      |   34 ++++++++++++++++++++++++++++++
+ src/io.h      |   10 +++++++-
+ src/main.c    |   63 ++++++++++++++++++++++++++++++++++++++++++++++++--------
+ src/options.c |   44 ++++++++++++++++++++++++++++++++++++++-
+ src/options.h |   11 +++++++++-
+ 5 files changed, 148 insertions(+), 14 deletions(-)
+
+commit f2f3cee239c28dc6eb31e830b17b4ff8ce2401dc
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Mar 13 19:04:20 2011 +0100
+
+    Ensure single inclusion.
+
+ src/io.h |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
+
+commit efb95a1727e326358079bfeab77e8b95b4cedd4a
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Mar 13 19:03:12 2011 +0100
+
+    Improve error reporting.
+
+ src/main.c |   39 +++++++++++++++++++++------------------
+ 1 files changed, 21 insertions(+), 18 deletions(-)
+
+commit 44553b8b14669805a4837296676f9fc2e1ee9599
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Mar 13 18:56:23 2011 +0100
+
+    Parse commandline options.
+
+ src/Makefile.am |    2 +
+ src/main.c      |   51 +++++++++++++++++--
+ src/options.c   |  144 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/options.h   |   34 +++++++++++++
+ 4 files changed, 225 insertions(+), 6 deletions(-)
+
+commit 213251d4a5b96f3a44c21042604add45668ac428
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Mar 6 19:28:29 2011 +0100
+
+    Make the interpreter useful.
+
+ src/Makefile.am |    2 +
+ src/io.c        |   94 ++++++++++++++++++++++++++++++++++++++++++++
+ src/io.h        |   26 ++++++++++++
+ src/main.c      |  116 +++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 4 files changed, 234 insertions(+), 4 deletions(-)
+
+commit f99fb2d8c1554f608ca876248411694f792a40b9
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Mar 6 17:47:54 2011 +0100
+
+    Enable silent rules.
+
+ configure.ac |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 095ebfd464b9466065f557408acab2c04fb112bb
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Mar 6 17:41:11 2011 +0100
+
+    Add simple build system and dummy interpreter.
+
+ .gitignore      |   12 ++++++++++++
+ Makefile.am     |   10 ++++++++++
+ autogen.sh      |   29 +++++++++++++++++++++++++++++
+ configure.ac    |   27 +++++++++++++++++++++++++++
+ src/Makefile.am |   26 ++++++++++++++++++++++++++
+ src/main.c      |   15 +++++++++++++++
+ 6 files changed, 119 insertions(+), 0 deletions(-)
+
+commit 4c87eafed836c539417db7c8bce82de4541efc49
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Mar 6 17:05:54 2011 +0100
+
+    Initial import.
+
+ NEWS   |   41 +++++++++++++++++++++++++++++++++++++++++
+ README |   39 +++++++++++++++++++++++++++++++++++++++
+ beef.1 |   56 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 136 insertions(+), 0 deletions(-)
