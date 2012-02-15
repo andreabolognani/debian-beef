@@ -1,0 +1,4 @@
+version=3
+opts=filenamemangle=s/^\/software\/beef\/releases\/(.+)\/source$/beef-$1\.tar\.gz/ \
+http://kiyuko.org/software/beef/releases \
+	/software/beef/releases/(.+)/source
