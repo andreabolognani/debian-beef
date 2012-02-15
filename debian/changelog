@@ -1,0 +1,36 @@
+beef (0.0.6-2) unstable; urgency=low
+
+  * Added watch file
+  * Added support for DEB_BUILD_OPTIONS (noopt)
+  * Don't ignore `$(MAKE) clean' errors anymore
+  * Bumped Standards-Version to 3.7.3 (no changes needed)
+  * Moved Homepage to the proper control field
+  * Changed debian/copyright to comply with the proposed machine-interpretable
+    copyright format (with some modifications)
+
+ -- Andrea Bolognani <eof@kiyuko.org>  Sun, 17 Feb 2008 23:51:57 +0100
+
+beef (0.0.6-1) unstable; urgency=low
+
+  * New upstream release
+  * Bumped Standards-Version to 3.7.2
+  * Improved long description
+  * Added Homepage pseudo-field
+  * Sponsored package by Neil McGovern <neilm@debian.org>
+    - Proofread and updated long description to better English
+
+ -- Andrea Bolognani <eof@kiyuko.org>  Thu,  1 Feb 2007 19:58:12 +0100
+
+beef (0.0.5-1) unstable; urgency=low
+
+  * New upstream release
+  * Added copyright notice for the packaging work
+
+ -- Andrea Bolognani <eof@kiyuko.org>  Wed, 29 Mar 2006 09:44:35 +0100
+
+beef (0.0.4-1) unstable; urgency=low
+
+  * Initial release. Closes: #355179 
+
+ -- Andrea Bolognani <eof@kiyuko.org>  Fri, 10 Mar 2006 16:02:20 +0100
+
