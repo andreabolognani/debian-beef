@@ -1,0 +1,36 @@
+Source: beef
+Section: devel
+Priority: optional
+Maintainer: Andrea Bolognani <eof@kiyuko.org>
+Build-Depends: debhelper (>= 9),
+               dpkg-dev (>= 1.16.1~),
+               autoconf (>= 2.67.2),
+               automake (>= 1:1.11.1),
+               pkg-config (>= 0.16.0),
+               libglib2.0-dev (>= 2.18.0),
+               libcattle-1.0-dev (>= 1.0.1),
+               libreadline6-dev
+Standards-Version: 3.9.2
+Homepage: http://kiyuko.org/software/beef
+Vcs-Git: git://anonscm.debian.org/collab-maint/beef.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/beef.git;a=summary
+
+Package: beef
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Suggests: gvfs,
+          gvfs-backends
+Description: flexible Brainfuck interpreter
+ Beef is an interpreter for the Brainfuck programming language.
+ .
+ Its main goals are to be confortable for the user and to run most
+ Brainfuck programs unchanged; speed is generally quite good. 
+ .
+ Beef performs thorough error checking to make sure malformed programs are
+ not executed; it also supports a bunch of command-line options that can be
+ used for configuration or compatibility purposes.
+ .
+ If GVFS is installed, Beef can use any available backend as either output
+ or (where it makes sense) input source. GNU readline is used for
+ interactive input.
