@@ -1,0 +1,22 @@
+Description: Skip some documentation files when installing
+ Some documentation files, like ChangeLog and COPYING, are installed
+ automatically by debhelper; other files, like README, simply don't make
+ sense in a Debian system. Skip those files when installing.
+Forwarded: not-needed
+Author: Andrea Bolognani <eof@kiyuko.org>
+Last-Update: 2012-02-16
+Index: beef.git/Makefile.am
+===================================================================
+--- beef.git.orig/Makefile.am	2012-02-13 19:32:51.368710496 +0100
++++ beef.git/Makefile.am	2012-02-16 22:22:49.453605629 +0100
+@@ -7,10 +7,7 @@
+ 
+ doc_DATA = \
+ 	AUTHORS \
+-	ChangeLog \
+-	COPYING \
+ 	NEWS \
+-	README \
+ 	$(NULL)
+ 
+ EXTRA_DIST = \
