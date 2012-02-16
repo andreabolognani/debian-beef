@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	# Update build system
+	autoreconf --force \
+	           --install \
+	           --symlink
+	# Run configure
+	dh_auto_configure

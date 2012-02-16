@@ -7,6 +7,7 @@ Build-Depends: debhelper (>= 9),
                autoconf (>= 2.67.2),
                automake (>= 1:1.11.1),
                pkg-config (>= 0.16.0),
+               pandoc,
                libglib2.0-dev (>= 2.18.0),
                libcattle-1.0-dev (>= 1.0.1),
                libreadline6-dev
