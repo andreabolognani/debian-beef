@@ -2,7 +2,13 @@ beef (1.0.0-1) unstable; urgency=low
 
   * New upstream release. (Closes: #639247)
   * Fix watch file. (Closes: #529748)
+  * 001-fix-whatis-entry.diff:
+    - use the conventional format for the NAME section of the man
+      page, so that programs such as whatis and apropos can parse it.
+  * 101-skip-documentation-files.diff:
+    - don't install duplicated documentation files.
   * Switch to 3.0 (quilt) source format.
+  * Bump Standards-Version to 3.9.2 (no changes needed).
 
  -- Andrea Bolognani <eof@kiyuko.org>  Wed, 15 Feb 2012 21:27:52 +0100
 

@@ -1,0 +1,22 @@
+Description: Fix whatis entry in the man page
+ Programs such as whatis and apropos rely on the NAME section
+ of a man page to be written in according to certain conventions.
+ .
+ This patch changes the Markdown file from which the man page is
+ generated to comply with these conventions.
+Forwarded: Andrea Bolognani <eof@kiyuko.org>
+Author: Andrea Bolognani <eof@kiyuko.org>
+Last-Update: 2012-02-16
+Index: beef.git/doc/beef.1.text.in
+===================================================================
+--- beef.git.orig/doc/beef.1.text.in	2012-02-13 19:32:51.408710909 +0100
++++ beef.git/doc/beef.1.text.in	2012-02-16 23:11:40.812463498 +0100
+@@ -4,7 +4,7 @@
+ 
+ # NAME
+ 
+-Beef -- Flexible Brainfuck interpreter
++Beef - Flexible Brainfuck interpreter
+ 
+ # SYNOPSIS
+ 
