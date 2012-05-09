@@ -1,0 +1,26 @@
+Description: Don't recreate ChangeLog at build time
+ The ChangeLog must not be regenerated because otherwise building the
+ package from a clone of the package repository would overwrite the one
+ shipped in the tarball.
+Forwarded: not-needed
+Author: Andrea Bolognani <eof@kiyuko.org>
+Last-Update: 2012-05-09
+Index: beef.git/Makefile.am
+===================================================================
+--- beef.git.orig/Makefile.am	2012-05-09 23:58:09.896048768 +0200
++++ beef.git/Makefile.am	2012-05-09 23:59:02.548783650 +0200
+@@ -17,14 +17,4 @@
+ 	$(NULL)
+ 
+ DISTCLEANFILES = \
+-	ChangeLog \
+ 	$(NULL)
+-
+-ChangeLog:
+-	$(AM_V_GEN) \
+-	(GIT_DIR=$(top_srcdir)/.git $(top_srcdir)/missing --run git log --stat) >$@.tmp 2>/dev/null\
+-	&& mv -f $@.tmp $@ \
+-	|| ($(RM) $@.tmp; \
+-	echo "         Could not generate ChangeLog, your ChangeLog may be outdated" >&2)
+-
+-.PHONY: ChangeLog

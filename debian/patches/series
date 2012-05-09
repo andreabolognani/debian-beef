@@ -1,3 +1,4 @@
 # To rebuild this file, use `debian/rules rebuild-series'
 U01-fix-whatis-entry.diff
 D01-skip-documentation-files.diff
+D02-leave-changelog-alone.diff

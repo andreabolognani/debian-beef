@@ -2,18 +2,20 @@ beef (1.0.0-1) unstable; urgency=low
 
   * New upstream release. (Closes: #639247)
   * Fix watch file. (Closes: #529748)
-  * 001-fix-whatis-entry.diff:
+  * U01-fix-whatis-entry.diff:
     - use the conventional format for the NAME section of the man
       page, so that programs such as whatis and apropos can parse it.
-  * 101-skip-documentation-files.diff:
+  * D01-skip-documentation-files.diff:
     - don't install duplicated documentation files.
+  * D02-leave-changelog-alone.diff:
+    - don't overwrite upstream changelog.
   * Switch to 3.0 (quilt) source format.
   * Switch to compat level 9.
   * Update Debian copyright file to DEP5 candidate version.
   * Add Vcs-* control fields.
   * Bump Standards-Version to 3.9.2 (no changes needed).
 
- -- Andrea Bolognani <eof@kiyuko.org>  Fri, 17 Feb 2012 00:00:00 +0100
+ -- Andrea Bolognani <eof@kiyuko.org>  Wed, 09 May 2012 23:59:21 +0200
 
 beef (0.0.6-2) unstable; urgency=low
 
