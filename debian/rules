@@ -3,10 +3,14 @@
 %:
 	dh $@
 
+# Refresh the build system.
+#
+# The build system is completely regenerated to ensure the tools used to
+# build the binary package are the ones shipped with Debian.
 override_dh_auto_configure:
-	# Update build system
-	autoreconf --force \
-	           --install \
-	           --symlink
-	# Run configure
-	dh_auto_configure
+	@( \
+		autoreconf --force \
+		           --install \
+		           --symlink; \
+		dh_auto_configure \
+	)
