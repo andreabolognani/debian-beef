@@ -1,2 +1,3 @@
-001-fix-whatis-entry.diff
-101-skip-documentation-files.diff
+# To rebuild this file, use `debian/rules rebuild-series'
+U01-fix-whatis-entry.diff
+D01-skip-documentation-files.diff
