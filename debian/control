@@ -12,7 +12,7 @@ Build-Depends: debhelper (>= 9),
                libglib2.0-dev (>= 2.18.0),
                libcattle-1.0-dev (>= 1.0.1),
                libreadline6-dev
-Standards-Version: 3.9.2
+Standards-Version: 3.9.3
 Homepage: http://kiyuko.org/software/beef
 Vcs-Git: git://anonscm.debian.org/collab-maint/beef.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/beef.git;a=summary
