@@ -1,4 +1,4 @@
-beef (1.0.0-1) unstable; urgency=low
+beef (1.0.0-1) experimental; urgency=low
 
   * New upstream release. (Closes: #639247)
   * Fix watch file. (Closes: #529748)
