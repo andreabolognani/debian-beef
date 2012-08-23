@@ -12,7 +12,8 @@ override_dh_auto_configure:
 		autoreconf --force \
 		           --install \
 		           --symlink; \
-		dh_auto_configure \
+		dh_auto_configure -- \
+		                  --disable-silent-rules; \
 	)
 
 # Rebuild the series file by looking at the contents of the patches directory.
