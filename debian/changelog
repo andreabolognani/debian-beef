@@ -5,8 +5,9 @@ beef (1.0.1-1) unstable; urgency=low
     - merged upstream; dropped.
   * D01-tweak-build-system.diff:
     - merge all upstream build system modifications into a single patch.
+  * Bump Standards-Version to 3.9.6.
 
- -- Andrea Bolognani <eof@kiyuko.org>  Thu, 23 Oct 2014 00:52:12 +0200
+ -- Andrea Bolognani <eof@kiyuko.org>  Thu, 23 Oct 2014 01:11:33 +0200
 
 beef (1.0.0-1) experimental; urgency=low
 
