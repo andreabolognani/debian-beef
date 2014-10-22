@@ -1,0 +1,36 @@
+Description: Tweak build system
+ Some documentation files, like ChangeLog and COPYING, are installed
+ automatically by debhelper, so skip them when installing.
+ Also remove all rules used to create the changelog, to prevent it
+ from being rebuilt when compiling the Debian package from a git clone.
+Forwarded: not-needed
+Author: Andrea Bolognani <eof@kiyuko.org>
+Last-Update: 2014-10-23
+Index: beef.git/Makefile.am
+===================================================================
+--- beef.git.orig/Makefile.am	2014-10-23 00:46:35.242603864 +0200
++++ beef.git/Makefile.am	2014-10-23 00:46:32.654603736 +0200
+@@ -7,8 +7,6 @@
+ 
+ doc_DATA = \
+ 	AUTHORS.md \
+-	ChangeLog \
+-	COPYING \
+ 	NEWS.md \
+ 	README.md \
+ 	$(NULL)
+@@ -20,14 +18,4 @@
+ 	$(NULL)
+ 
+ DISTCLEANFILES = \
+-	ChangeLog \
+ 	$(NULL)
+-
+-ChangeLog:
+-	$(AM_V_GEN) \
+-	(GIT_DIR=$(top_srcdir)/.git $(top_srcdir)/missing --run git log --stat) >$@.tmp 2>/dev/null\
+-	&& mv -f $@.tmp $@ \
+-	|| ($(RM) $@.tmp; \
+-	echo "         Could not generate ChangeLog, your ChangeLog may be outdated" >&2)
+-
+-.PHONY: ChangeLog

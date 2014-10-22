@@ -1,3 +1,2 @@
 # To rebuild this file, use `debian/rules rebuild-series'
-D01-skip-documentation-files.diff
-D02-leave-changelog-alone.diff
+D01-tweak-build-system.diff

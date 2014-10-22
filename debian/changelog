@@ -3,8 +3,10 @@ beef (1.0.1-1) unstable; urgency=low
   * New upstream release.
   * U01-fix-whatis-entry.diff:
     - merged upstream; dropped.
+  * D01-tweak-build-system.diff:
+    - merge all upstream build system modifications into a single patch.
 
- -- Andrea Bolognani <eof@kiyuko.org>  Thu, 23 Oct 2014 00:27:43 +0200
+ -- Andrea Bolognani <eof@kiyuko.org>  Thu, 23 Oct 2014 00:52:12 +0200
 
 beef (1.0.0-1) experimental; urgency=low
 
