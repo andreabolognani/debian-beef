@@ -1,5 +1,5 @@
-/* Beef -- Flexible Brainfuck interpreter
- * Copyright (C) 2005-2011  Andrea Bolognani <eof@kiyuko.org>
+/* Beef - Flexible Brainfuck interpreter
+ * Copyright (C) 2005-2014  Andrea Bolognani <eof@kiyuko.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,19 +28,19 @@
 
 G_BEGIN_DECLS
 
-gchar*   load_file_contents        (GFile              *file,
-                                    GError            **error);
+CattleBuffer* load_file_contents        (GFile              *file,
+                                         GError            **error);
 
-gboolean output_handler            (CattleInterpreter  *interpreter,
-                                    gchar               output,
-                                    gpointer            data,
-                                    GError            **error);
-gboolean input_handler             (CattleInterpreter  *interpreter,
-                                    gpointer            data,
-                                    GError            **error);
-gboolean input_handler_interactive (CattleInterpreter  *interpreter,
-                                    gpointer            data,
-                                    GError            **error);
+gboolean      output_handler            (CattleInterpreter  *interpreter,
+                                         gint8               output,
+                                         gpointer            data,
+                                         GError            **error);
+gboolean      input_handler             (CattleInterpreter  *interpreter,
+                                         gpointer            data,
+                                         GError            **error);
+gboolean      input_handler_interactive (CattleInterpreter  *interpreter,
+                                         gpointer            data,
+                                         GError            **error);
 
 G_END_DECLS
 

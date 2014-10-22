@@ -1,5 +1,5 @@
-/* Beef -- Flexible Brainfuck interpreter
- * Copyright (C) 2005-2011  Andrea Bolognani <eof@kiyuko.org>
+/* Beef - Flexible Brainfuck interpreter
+ * Copyright (C) 2005-2014  Andrea Bolognani <eof@kiyuko.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,12 +30,71 @@
 #define INPUT_BUFFER_SIZE 1024
 
 /**
+ * PROMPT_BUFFER_SIZE:
+ *
+ * Size of the buffer used to store the prompt.
+ */
+#define PROMPT_BUFFER_SIZE 256
+
+/**
  * prompt:
  *
  * The last line of output. Must be passed to readline() for line
  * editing to work as expected.
  */
-static gchar *prompt = NULL;
+static gchar  *prompt = NULL;
+static gulong  prompt_cursor = 0;
+static gulong  prompt_length = 0;
+
+static void
+prompt_append (gint8 c)
+{
+	gchar  *temp;
+	gulong  i;
+
+	if (prompt == NULL)
+	{
+		/* First use.
+		 * Allocate a small buffer */
+		prompt = (gchar *) g_slice_alloc (PROMPT_BUFFER_SIZE);
+		prompt_length = PROMPT_BUFFER_SIZE;
+	}
+
+	if (prompt_cursor > prompt_length - 2)
+	{
+		/* The buffer needs to be extended */
+		temp = (gchar *) g_slice_alloc (prompt_length + PROMPT_BUFFER_SIZE);
+
+		for (i = 0; i < prompt_length; i++)
+		{
+			temp[i] = prompt[i];
+		}
+
+		if (prompt != NULL)
+		{
+			g_slice_free1 (prompt_length, prompt);
+		}
+
+		prompt = temp;
+		prompt_length += PROMPT_BUFFER_SIZE;
+	}
+
+	prompt[prompt_cursor] = c;
+	prompt[prompt_cursor + 1] = '\0';
+
+	prompt_cursor++;
+}
+
+static void
+prompt_reset (void)
+{
+	if (prompt != NULL)
+	{
+		prompt[0] = '\0';
+	}
+
+	prompt_cursor = 0;
+}
 
 /**
  * load_file_contents:
@@ -45,17 +104,18 @@ static gchar *prompt = NULL;
  * Load the contents of @file, with good error checking and proper
  * handling of magic bytes.
  *
- * Returns: the contents of @file, or %NULL
+ * Returns: (transfer full): the contents of @file, or %NULL
  */
-gchar*
+CattleBuffer*
 load_file_contents (GFile   *file,
                     GError **error)
 {
-	GError *inner_error;
-	gchar *contents;
-	gchar *temp;
-	gboolean success;
-	gsize len;
+	CattleBuffer *contents;
+	GError       *inner_error;
+	gchar        *buffer;
+	gchar        *start;
+	gsize         size;
+	gboolean      success;
 
 	g_return_val_if_fail (G_IS_FILE (file), NULL);
 	g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -64,48 +124,44 @@ load_file_contents (GFile   *file,
 	inner_error = NULL;
 	success = g_file_load_contents (file,
 	                                NULL,
-	                                &contents,
-	                                &len,
+	                                &buffer,
+	                                &size,
 	                                NULL, /* No etag */
 	                                &inner_error);
 
-	if (!success) {
-
+	if (!success)
+	{
 		g_propagate_error (error,
 		                   inner_error);
 
 		return NULL;
 	}
 
-	/* Validate the contents as UTF-8 */
-	success = g_utf8_validate (contents,
-	                           len,
-	                           NULL);
-
-	if (!success) {
-
-		g_set_error_literal (error,
-		                     G_IO_ERROR,
-		                     G_IO_ERROR_FAILED,
-		                     "Invalid UTF-8");
-
-		return NULL;
-	}
+	/* Mark the start of the input */
+	start = buffer;
 
 	/* Detect and handle magic bytes */
-	if (g_str_has_prefix (contents, "#!")) {
+	if (size > 2)
+	{
+		if (buffer[0] == '#' && buffer[1] == '!')
+		{
+			/* Look for the first newline */
+			while (size > 0 && start[0] != '\n')
+			{
+				start++;
+				size--;
+			}
 
-		/* Look for the beginning of the second line */
-		temp = g_utf8_strchr (contents,
-		                      len,
-		                      (gunichar) '\n');
-		temp = g_utf8_next_char (temp);
-
-		/* Strip the first line */
-		temp = g_strdup_printf ("%s", temp);
-		g_free (contents);
-		contents = temp;
+			/* Move past it */
+			start++;
+			size--;
+		}
 	}
+
+	contents = cattle_buffer_new (size);
+	cattle_buffer_set_contents (contents, start);
+
+	g_free (buffer);
 
 	return contents;
 }
@@ -117,16 +173,16 @@ load_file_contents (GFile   *file,
  */
 gboolean
 output_handler (CattleInterpreter  *interpreter,
-                gchar               output,
+                gint8               output,
                 gpointer            data,
                 GError            **error)
 {
 	GOutputStream *stream;
-	GError *inner_error;
-	gchar *temp;
+	GError        *inner_error;
+	gchar         *temp;
 
-	if (G_IS_OUTPUT_STREAM (data)) {
-
+	if (G_IS_OUTPUT_STREAM (data))
+	{
 		/* Writing to a file: get the stream */
 		stream = G_OUTPUT_STREAM (data);
 
@@ -145,32 +201,21 @@ output_handler (CattleInterpreter  *interpreter,
 			return FALSE;
 		}
 	}
-	else {
-
+	else
+	{
 		/* Write to standard output */
 		g_print ("%c", output);
 	}
 
-	/* Create an empty string for prompt */
-	if (prompt == NULL) {
+	/* Update the prompt */
 
-		prompt = g_strdup ("");
+	if (output != '\n')
+	{
+		prompt_append (output);
 	}
-
-	/* Not the end of the current line */
-	if (output != '\n') {
-
-		/* Append the output character to the prompt string */
-		temp = g_strdup_printf ("%s%c", prompt,
-		                                output);
-		g_free (prompt);
-		prompt = temp;
-	}
-	else {
-
-		/* End of current line: reset the prompt */
-		g_free (prompt);
-		prompt = NULL;
+	else
+	{
+		prompt_reset ();
 	}
 
 	return TRUE;
@@ -186,43 +231,37 @@ input_handler (CattleInterpreter  *interpreter,
                gpointer            data,
                GError            **error)
 {
+	CattleBuffer *input;
 	GInputStream *stream;
-	GError *inner_error;
-	gchar buffer[INPUT_BUFFER_SIZE];
-	gssize count;
+	GError       *inner_error;
+	gchar         buffer[INPUT_BUFFER_SIZE];
+	gssize        size;
 
 	stream = G_INPUT_STREAM (data);
 
 	inner_error = NULL;
-	count = g_input_stream_read (stream,
-	                             buffer,
-	                             INPUT_BUFFER_SIZE - 1,
-	                             NULL,
-	                             &inner_error);
+	size = g_input_stream_read (stream,
+	                            buffer,
+	                            INPUT_BUFFER_SIZE,
+	                            NULL,
+	                            &inner_error);
 
-	/* Make sure the buffer is null-terminated */
-	buffer[count] = '\0';
-
-	if (inner_error != NULL) {
-
+	if (inner_error != NULL)
+	{
 		g_propagate_error (error,
 		                   inner_error);
 
 		return FALSE;
 	}
 
-	/* Feed the interpreter with the new input, or notify it that the
-	 * end of input has been reached */
-	if (count == 0) {
+	/* Copy the input to a CattleBuffer */
+	input = cattle_buffer_new (size);
+	cattle_buffer_set_contents (input, buffer);
 
-		cattle_interpreter_feed (interpreter,
-		                         NULL);
-	}
-	else {
+	/* Feed the interpreter with the new input */
+	cattle_interpreter_feed (interpreter, input);
 
-		cattle_interpreter_feed (interpreter,
-		                         buffer);
-	}
+	g_object_unref (input);
 
 	return TRUE;
 }
@@ -230,15 +269,16 @@ input_handler (CattleInterpreter  *interpreter,
 /**
  * input_handler_interactive:
  *
- * Retrieve input from the user in an interactive way.
+ * Retrieve input from the user interactively.
  */
 gboolean
 input_handler_interactive (CattleInterpreter  *interpreter,
                            gpointer            data,
                            GError            **error)
 {
-	char *buffer;
-	gchar *temp;
+	CattleBuffer *input;
+	gchar        *buffer;
+	gulong        size;
 
 	/* Use readline to fetch user input. readline is notified of
 	 * the fact that it should not handle the prompt itself, as there
@@ -248,26 +288,30 @@ input_handler_interactive (CattleInterpreter  *interpreter,
 
 	/* Reset prompt after input, because the cursor is certainly at
 	 * the beginning of a new line */
-	g_free (prompt);
-	prompt = NULL;
+	prompt_reset ();
 
-	if (buffer == NULL) {
-
-		cattle_interpreter_feed (interpreter,
-		                         NULL);
+	if (buffer == NULL)
+	{
+		input = cattle_buffer_new (0);
 	}
-	else {
+	else
+	{
+		/* Size of the input */
+		size = strlen (buffer) + 1;
 
-		/* The input fed to the interpreter must retain the newline
-		 * character, but readline strips it, so it has to be
-		 * manually added back */
-		temp = g_strdup_printf ("%s\n", buffer);
+		/* Copy the input, overwriting the trailing null byte
+		 * with the newline that's been stripped by readline */
+		input = cattle_buffer_new (size);
+		cattle_buffer_set_contents (input, buffer);
+		cattle_buffer_set_value (input, size - 1, '\n');
+
 		free (buffer);
-
-		cattle_interpreter_feed (interpreter,
-		                         temp);
-		g_free (temp);
 	}
+
+	/* Feed the interpreter with the new input */
+	cattle_interpreter_feed (interpreter, input);
+
+	g_object_unref (input);
 
 	return TRUE;
 }

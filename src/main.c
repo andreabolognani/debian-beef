@@ -1,5 +1,5 @@
-/* Beef -- Flexible Brainfuck interpreter
- * Copyright (C) 2005-2011  Andrea Bolognani <eof@kiyuko.org>
+/* Beef - Flexible Brainfuck interpreter
+ * Copyright (C) 2005-2014  Andrea Bolognani <eof@kiyuko.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,14 +40,14 @@ void
 display_error (const gchar *context,
                const gchar *message)
 {
-	if (context != NULL) {
-
+	if (context != NULL)
+	{
 		g_printerr ("%s: %s: %s\n", g_get_prgname (),
 		                            context,
 		                            message);
 	}
-	else {
-
+	else
+	{
 		g_printerr ("%s: %s\n", g_get_prgname (),
 		                        message);
 	}
@@ -63,19 +63,22 @@ main (gint    argc,
       gchar **argv)
 {
 	CattleInterpreter *interpreter;
-	CattleProgram *program;
-	GFile *file;
+	CattleProgram     *program;
+	CattleBuffer      *buffer;
+	GFile             *file;
 	GFileOutputStream *output_stream;
-	GFileInputStream *input_stream;
-	GOptionContext *context;
-	GOptionGroup *group;
-	GError *error;
-	OptionValues *option_values;
-	gchar *contents;
-	gboolean success;
+	GFileInputStream  *input_stream;
+	GOptionContext    *context;
+	GOptionGroup      *group;
+	GError            *error;
+	OptionValues      *option_values;
+	gboolean           success;
+
+#if !GLIB_CHECK_VERSION(2, 36, 0)
+	g_type_init ();
+#endif
 
 	g_set_prgname ("beef");
-	g_type_init ();
 
 	/* Set up a configuration group for commanline options */
 	option_values = g_new0 (OptionValues, 1);
@@ -94,8 +97,8 @@ main (gint    argc,
 	error = NULL;
 	success = g_option_context_parse (context, &argc, &argv, &error);
 
-	if (!success) {
-
+	if (!success)
+	{
 		display_error (NULL,
 		               error->message);
 
@@ -108,8 +111,8 @@ main (gint    argc,
 	}
 
 	/* Make sure a file has been specified on the commandline */
-	if (argc != 2) {
-
+	if (argc != 2)
+	{
 		g_printerr ("Usage: %s [OPTION...] FILE\n", g_get_prgname ());
 
 		g_object_unref (option_values->configuration);
@@ -124,12 +127,12 @@ main (gint    argc,
 	file = g_file_new_for_commandline_arg (argv[1]);
 
 	error = NULL;
-	contents = load_file_contents (file,
-								   &error);
+	buffer = load_file_contents (file,
+	                             &error);
 	g_object_unref (file);
 
-	if (contents == NULL) {
-
+	if (buffer == NULL)
+	{
 		display_error (argv[1],
 		               error->message);
 
@@ -147,13 +150,13 @@ main (gint    argc,
 	/* Load program */
 	error = NULL;
 	success = cattle_program_load (program,
-	                               contents,
+	                               buffer,
 	                               &error);
 	g_object_unref (program);
-	g_free (contents);
+	g_object_unref (buffer);
 
-	if (!success) {
-
+	if (!success)
+	{
 		display_error (argv[1],
 		               error->message);
 
@@ -177,8 +180,8 @@ main (gint    argc,
 
 	/* If output to file was chosen, open the selected output file and
 	 * assign a suitable output handler to the interpreter */
-	if (option_values->output_filename != NULL) {
-
+	if (option_values->output_filename != NULL)
+	{
 		file = g_file_new_for_commandline_arg (option_values->output_filename);
 
 		error = NULL;
@@ -190,8 +193,8 @@ main (gint    argc,
 		                                &error);
 		g_object_unref (file);
 
-		if (error != NULL) {
-
+		if (error != NULL)
+		{
 			display_error (option_values->output_filename,
 			               error->message);
 
@@ -211,8 +214,8 @@ main (gint    argc,
 
 	/* If input from file was chosen, open the selected input file and
 	 * assign a suitable input handler to the interpreter */
-	if (option_values->input_filename != NULL) {
-
+	if (option_values->input_filename != NULL)
+	{
 		file = g_file_new_for_commandline_arg (option_values->input_filename);
 
 		error = NULL;
@@ -221,8 +224,8 @@ main (gint    argc,
 		                            &error);
 		g_object_unref (file);
 
-		if (error != NULL) {
-
+		if (error != NULL)
+		{
 			display_error (option_values->input_filename,
 			               error->message);
 
@@ -240,13 +243,13 @@ main (gint    argc,
 		                                      input_handler,
 		                                      input_stream);
 	}
-	else {
-
+	else
+	{
 		/* Use readline only if standard input is connected to a
 		 * terminal; otherwise, eg. when using shell input redirection,
 		 * the input is displayed along with the output, which is not nice */
-		if (isatty (0)) {
-
+		if (isatty (0))
+		{
 			/* Initialize readline */
 			rl_initialize ();
 
@@ -265,8 +268,8 @@ main (gint    argc,
 	success = cattle_interpreter_run (interpreter,
 	                                  &error);
 
-	if (!success) {
-
+	if (!success)
+	{
 		display_error (argv[1],
 		               error->message);
 
@@ -280,8 +283,8 @@ main (gint    argc,
 		return 1;
 	}
 
-	if (output_stream != NULL) {
-
+	if (output_stream != NULL)
+	{
 		/* Close the output file */
 		error = NULL;
 		g_output_stream_close (G_OUTPUT_STREAM (output_stream),
@@ -289,8 +292,8 @@ main (gint    argc,
 		                       &error);
 		g_object_unref (output_stream);
 
-		if (error != NULL) {
-
+		if (error != NULL)
+		{
 			display_error (option_values->output_filename,
 			               error->message);
 
@@ -304,8 +307,8 @@ main (gint    argc,
 		}
 	}
 
-	if (input_stream != NULL) {
-
+	if (input_stream != NULL)
+	{
 		/* Close the input file */
 		error = NULL;
 		g_input_stream_close (G_INPUT_STREAM (input_stream),
