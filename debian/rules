@@ -9,9 +9,11 @@
 # build the binary package are the ones shipped with Debian.
 override_dh_auto_configure:
 	@( \
-		autoreconf --force \
-		           --install \
-		           --symlink; \
+		libtoolize -f -c; \
+		aclocal; \
+		autoheader -f; \
+		autoconf -f; \
+		automake -f -a -c --foreign; \
 		dh_auto_configure -- \
 		                  --disable-silent-rules; \
 	)
