@@ -1,5 +1,22 @@
-Changes from Beef 1.0.0 to 1.0.1
---------------------------------
+Beef 1.0.2 (2017-01-11)
+-----------------------
+
+  * Portability fixes
+
+    - Compiling Beef on platforms that ship outdated readline
+      releases, install third-party libraries under non-default
+      paths or use Clang as the compiler should now require no
+      source patching. FreeBSD, for example, does all three
+
+  * Enable compiler warnings
+
+    - Fix code quality issues uncovered by doing so
+
+  * Build system cleanups and improvements
+
+
+Beef 1.0.1 (2014-10-21)
+-----------------------
 
   * Port to Cattle 1.2.0:
 
@@ -7,8 +24,8 @@ Changes from Beef 1.0.0 to 1.0.1
       architectures (tested on x86_64 and ARMv7).
 
 
-Changes from Beef 0.0.6 to 1.0.0
---------------------------------
+Beef 1.0.0 (2011-04-09)
+-----------------------
 
   * Use readline for interactive input.
 
@@ -21,8 +38,8 @@ Changes from Beef 0.0.6 to 1.0.0
     - fix some inconsistencies and bugs.
 
 
-Changes from Beef 0.0.5 to 0.0.6
---------------------------------
+Beef 0.0.6 (2007-02-01)
+-----------------------
 
   * Ignore the first line if it starts with the magic bytes `#!`.
 
@@ -31,8 +48,8 @@ Changes from Beef 0.0.5 to 0.0.6
   * Minor code cleanups.
 
 
-Changes from Beef 0.0.4 to 0.0.5
---------------------------------
+Beef 0.0.5 (2006-04-02)
+-----------------------
 
   * Improve code loader and runner (code taken from `bf.c` by Erik Bosman).
 
@@ -45,8 +62,8 @@ Changes from Beef 0.0.4 to 0.0.5
   * General cleanups.
 
 
-Changes from Beef 0.0.3 to 0.0.4
---------------------------------
+Beef 0.0.4 (2006-03-10)
+-----------------------
 
   * Add code loader for faster execution.
 
@@ -59,8 +76,8 @@ Changes from Beef 0.0.3 to 0.0.4
   * Fix man page.
 
 
-Changes from Beef 0.0.2 to 0.0.3
---------------------------------
+Beef 0.0.3 (2005-12-19)
+-----------------------
 
   * First released version.
 
@@ -75,8 +92,8 @@ Changes from Beef 0.0.2 to 0.0.3
   * Improve compilation output.
 
 
-Changes from Beef 0.0.1 to 0.0.2
---------------------------------
+Beef 0.0.2 (unreleased)
+-----------------------
 
   * Add support for debugging instructions (#).
 
@@ -85,7 +102,7 @@ Changes from Beef 0.0.1 to 0.0.2
   * Use shorter names for functions and variables.
 
 
-Changes in Beef 0.0.1
----------------------
+Beef 0.0.1 (unreleased)
+-----------------------
 
-  * First version, not released.
+  * First version

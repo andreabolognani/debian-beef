@@ -1,3 +1,347 @@
+commit 3403217621458a98861dbeb8b8e3753eea342193
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Wed Jan 11 23:50:56 2017 +0100
+
+    === Beef 1.0.2 ===
+
+commit 71a17f367852ce5d95f7eec61c1bded03433f7d3
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Wed Jan 11 00:18:40 2017 +0100
+
+    Bump version number
+
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 99b7339778597f56be0490d57f15e54aed25a8de
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Wed Jan 11 00:11:55 2017 +0100
+
+    Update copyright years
+
+ src/io.c      | 2 +-
+ src/io.h      | 2 +-
+ src/main.c    | 2 +-
+ src/options.c | 2 +-
+ src/options.h | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 91213ba779a9bda9dc433e55bf3ed980ca67f178
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Wed Jan 11 00:13:49 2017 +0100
+
+    Update date in man page
+    
+    The man page itself has not been updated in a while,
+    but leaving the date unchanged would give someone
+    reading it the impression the program itself has
+    not been touched since 2014, which is not the case.
+
+ doc/beef.1.markdown.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 47be26618220271432aaefe85f748b682c409229
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Wed Jan 11 23:46:12 2017 +0100
+
+    Add release dates to NEWS file
+
+ NEWS.markdown | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
+
+commit 9c3cf43a845068f15d2c1050f85daefddfa3e067
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Wed Jan 11 00:09:54 2017 +0100
+
+    Update NEWS.markdown
+
+ NEWS.markdown | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+commit 1924c7ef55d6a25f94ea750cec6aebd48a19bec4
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Tue Jan 10 23:45:29 2017 +0100
+
+    Add workaround for readline < 7.0
+    
+    Older readline releases don't #include <stdio.h> themselves,
+    even though they use datatypes from that file such as FILE*.
+    
+    To ensure compilation works despite of this bug, include the
+    header ourselves for the time being.
+
+ src/io.c   | 3 +++
+ src/main.c | 3 +++
+ 2 files changed, 6 insertions(+)
+
+commit 454002c78581bc3228125e3261e88feaca327891
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sat Dec 31 13:13:31 2016 +0100
+
+    Enable compilation warnings
+    
+    Always compile with -Wall -Wextra to prevent code quality
+    issues from slipping through the cracks during development.
+
+ configure.ac    | 8 ++++++++
+ src/Makefile.am | 4 ++++
+ 2 files changed, 12 insertions(+)
+
+commit 60b29a0e9ab41c7f25eaad64c6af09f1c3d1e169
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sat Dec 31 12:08:36 2016 +0100
+
+    Don't use GSEAL_ENABLE
+    
+    This compilation flag is not used at all in modern GLib or
+    GTK+ versions.
+
+ src/Makefile.am | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit b676cc1a0fec5b4f62dce6d456489de6e468b3ba
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sun Dec 18 18:13:24 2016 +0100
+
+    Improve readline detection
+    
+    Some operating systems, such as FreeBSD, install readline under
+    /usr/local, which means the compiler needs some help finding
+    the header and library files.
+    
+    The new --with-readline configure option can be used in such
+    situations.
+
+ configure.ac    | 33 +++++++++++++++++++++++++++++++++
+ src/Makefile.am |  2 ++
+ 2 files changed, 35 insertions(+)
+
+commit 43ab205d97a150572dbe055f9e22a69d9148bcfe
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sat Dec 3 17:17:21 2016 +0100
+
+    Include <string.h>
+    
+    Needed for memcpy() and strlen().
+
+ src/io.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit aa08b73542ff80b7837af9a44fae608507a94dad
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Sat Dec 3 16:53:51 2016 +0100
+
+    Silence compiler warnings
+    
+    Remove unused variables, mark unused arguments with
+    G_GNUC_UNUSED and initialize empty structs properly.
+
+ src/io.c      |  7 +++----
+ src/options.c | 16 ++++++++--------
+ 2 files changed, 11 insertions(+), 12 deletions(-)
+
+commit 2dd0e426abfd8fcee8d9ea57c04e7461fef24a8f
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Dec 2 19:02:53 2016 +0100
+
+    Cast data when storing it into CattleBuffers
+    
+    gcc does the casting implicitly for us, but clang doesn't and
+    complains about the type mismatch.
+
+ src/io.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 82daff71691973dae4a3a403da57b16cf08265a8
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Dec 2 13:01:45 2016 +0100
+
+    Use nodist_man_MANS instead of man_MANS
+
+ doc/Makefile.am | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 5cec6a7c8e4e1b13e3ec711fba07283445d43424
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Dec 2 12:59:52 2016 +0100
+
+    Clean up configure.ac
+
+ configure.ac | 36 ++++++++++++++++++++++++++++++------
+ 1 file changed, 30 insertions(+), 6 deletions(-)
+
+commit d019d6db09cd454f644cd8657bbcfe4ff503bd1d
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Dec 2 12:59:23 2016 +0100
+
+    Remove $(INCLUDES) usage
+
+ src/Makefile.am | 5 -----
+ 1 file changed, 5 deletions(-)
+
+commit 81f5128caa14b17041606c605f5ce0e188a77f91
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Dec 2 12:34:43 2016 +0100
+
+    Add Resources section to README
+    
+    It's been pointed out that GitHub considers every tag in a
+    repository to be a "release", and automatically lists it in
+    a specific section on the project's page.
+    
+    Additionaly, for each such "release", it provide links that
+    can be used to download the contents of the repository at the
+    time the tag was created.
+    
+    However, those contents are neither enough to build Beef
+    directly (generated files have, rightfully, never been checked
+    into Git) nor to initialize the build system properly, which
+    makes the archives created this way all but useless.
+    
+    Include a new section in the README that explains where to get
+    proper release archives, plus other information about
+    obtaining Beef.
+    
+    At the same time get rid of the Contacts section, which was
+    never very useful.
+
+ README.markdown | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
+
+commit e69ca1a584ef65c62f80e7fdc822f08141b62a59
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Dec 2 12:17:26 2016 +0100
+
+    Update autogen.sh
+    
+    Prefer symlinks to copies for build system files.
+
+ autogen.sh | 31 +++++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
+
+commit 3aed064410e50a90add101cbec96b74b7398f684
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Fri Dec 2 12:05:38 2016 +0100
+
+    Use dist_doc_DATA instead of doc_DATA
+
+ Makefile.am | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+commit 89bed25d03ac65f36a1357baa23c9ad6350c9b3b
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Thu Dec 1 19:35:28 2016 +0100
+
+    Make man page building rule more generic
+
+ doc/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 1bbb0b9973251c0ae871ef9251d9805c1d7c748e
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Thu Dec 1 19:38:17 2016 +0100
+
+    Don't distribute built man page
+
+ doc/Makefile.am | 4 ----
+ 1 file changed, 4 deletions(-)
+
+commit 505ac8e082859e81625e00f776e7213e8ea41e53
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Thu Dec 1 19:33:12 2016 +0100
+
+    Make pandoc mandatory for building
+
+ HACKING.markdown | 8 --------
+ INSTALL.markdown | 4 +++-
+ Makefile.am      | 1 -
+ configure.ac     | 3 ++-
+ doc/Makefile.am  | 6 ++----
+ 5 files changed, 7 insertions(+), 15 deletions(-)
+
+commit 752bdc45cbbeb45e9b7f9771c9858bdb0e052227
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Thu Dec 1 17:48:59 2016 +0100
+
+    Rename all Markdown files to *.markdown
+
+ .gitignore                                 |  1 -
+ AUTHORS.md => AUTHORS.markdown             |  0
+ HACKING.md => HACKING.markdown             |  2 +-
+ INSTALL.md => INSTALL.markdown             |  0
+ Makefile.am                                | 10 +++++-----
+ NEWS.md => NEWS.markdown                   |  0
+ README.md => README.markdown               |  0
+ configure.ac                               |  2 +-
+ doc/.gitignore                             |  1 +
+ doc/Makefile.am                            |  2 +-
+ doc/{beef.1.text.in => beef.1.markdown.in} |  0
+ 11 files changed, 9 insertions(+), 9 deletions(-)
+
+commit b9ed3b5b9737cd932f1a470a97068b955f4f57b1
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Thu Dec 1 17:10:56 2016 +0100
+
+    Improve ChangeLog generation
+    
+    Don't do anything unless we're building from a git checkout,
+    and consider any failure in generating a ChangeLog severe enough
+    that the entire build has to be stopped.
+
+ Makefile.am | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
+
+commit ef53518cc484a7873c64d891c5bc0d5d9976a1dc
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Thu Dec 1 17:06:54 2016 +0100
+
+    Use --color=never when generating ChangeLog
+    
+    We want to make sure the ChangeLog contains plain text only;
+    passing --color=never to git log ensures no funny escape
+    sequences will end up in the resulting file.
+
+ Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit faced69a9a8bb55598213e4c51737c874e2139d3
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Thu Dec 1 17:05:14 2016 +0100
+
+    Disable maintainer mode
+
+ configure.ac | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 6f971a9c22562ff4874f3d1430a87c358ea67da2
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Thu Dec 1 17:03:44 2016 +0100
+
+    Update ignore patterns
+
+ .gitignore     | 21 ++++++++++++++-------
+ doc/.gitignore |  1 +
+ src/.gitignore |  1 +
+ 3 files changed, 16 insertions(+), 7 deletions(-)
+
+commit ba78d33d1747d11fab6ff4e51e65be803a17be62
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Tue Oct 28 16:39:17 2014 +0100
+
+    Use memcopy() when extending the prompt buffer.
+
+ src/io.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+commit ae515411e28d71f4ca2c35cc253fcd160103e28f
+Author: Andrea Bolognani <eof@kiyuko.org>
+Date:   Tue Oct 28 11:33:01 2014 +0100
+
+    Remove unused variable declaration.
+
+ src/io.c | 1 -
+ 1 file changed, 1 deletion(-)
+
 commit 23daa2360f459bd47f0e5b29e4ae3191d38d8ea1
 Author: Andrea Bolognani <eof@kiyuko.org>
 Date:   Tue Oct 21 22:03:22 2014 +0200
@@ -55,18 +399,16 @@ Date:   Sun Oct 19 23:35:34 2014 +0200
 
     Update documentation.
 
- AUTHORS     |  1 -
- AUTHORS.md  |  4 +++
- HACKING     |  8 ------
- HACKING.md  |  8 ++++++
- INSTALL     | 12 --------
- INSTALL.md  | 12 ++++++++
- Makefile.am | 10 +++----
- NEWS        | 61 -----------------------------------------
- NEWS.md     | 91 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- README      | 29 --------------------
- README.md   | 38 ++++++++++++++++++++++++++
- 11 files changed, 158 insertions(+), 116 deletions(-)
+ AUTHORS               |  1 -
+ AUTHORS.md            |  4 +++
+ HACKING => HACKING.md |  6 ++--
+ INSTALL               | 12 -------
+ INSTALL.md            | 12 +++++++
+ Makefile.am           | 10 +++---
+ NEWS                  | 61 ----------------------------------
+ NEWS.md               | 91 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ README => README.md   | 17 +++++++---
+ 9 files changed, 128 insertions(+), 86 deletions(-)
 
 commit daceaee3892c6ede037099af9429f926ec910cb7
 Author: Andrea Bolognani <eof@kiyuko.org>
@@ -235,11 +577,10 @@ Date:   Fri Apr 8 21:39:42 2011 +0200
 
     Automatically insert version number in man page.
 
- configure.ac       |   1 +
- doc/Makefile.am    |   5 ++-
- doc/beef.1.text    | 102 -----------------------------------------------------
- doc/beef.1.text.in | 102 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 105 insertions(+), 105 deletions(-)
+ configure.ac                        | 1 +
+ doc/Makefile.am                     | 5 ++---
+ doc/{beef.1.text => beef.1.text.in} | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
 commit 98a58b769d87ee11a75093643f5234da2b9ef196
 Author: Andrea Bolognani <eof@kiyuko.org>

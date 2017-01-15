@@ -5,29 +5,32 @@ SUBDIRS = \
 	src \
 	$(NULL)
 
-doc_DATA = \
-	AUTHORS.md \
+dist_doc_DATA = \
+	AUTHORS.markdown \
 	ChangeLog \
 	COPYING \
-	NEWS.md \
-	README.md \
+	NEWS.markdown \
+	README.markdown \
 	$(NULL)
 
 EXTRA_DIST = \
-	$(doc_DATA) \
-	HACKING.md \
-	INSTALL.md \
+	INSTALL.markdown \
 	$(NULL)
 
-DISTCLEANFILES = \
+CLEANFILES = \
 	ChangeLog \
 	$(NULL)
 
 ChangeLog:
 	$(AM_V_GEN) \
-	(GIT_DIR=$(top_srcdir)/.git $(top_srcdir)/missing --run git log --stat) >$@.tmp 2>/dev/null\
-	&& mv -f $@.tmp $@ \
-	|| ($(RM) $@.tmp; \
-	echo "         Could not generate ChangeLog, your ChangeLog may be outdated" >&2)
+	if test -d "$(top_srcdir)/.git"; \
+	then \
+	  GIT_DIR="$(top_srcdir)/.git" \
+	  $(top_srcdir)/missing \
+	    --run git log --color=never --stat \
+	  >$@.tmp \
+	  && mv -f $@.tmp $@ \
+	  || ( $(RM) -f $@.tmp; false ) \
+	fi
 
 .PHONY: ChangeLog
