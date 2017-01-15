@@ -3,9 +3,10 @@ beef (1.0.2-1) unstable; urgency=low
   * New upstream release
 
   * Security
+    - Enable +bindnow hardening option
     - Use HTTPS wherever possible
 
- -- Andrea Bolognani <eof@kiyuko.org>  Sun, 15 Jan 2017 17:03:11 +0100
+ -- Andrea Bolognani <eof@kiyuko.org>  Sun, 15 Jan 2017 17:05:22 +0100
 
 beef (1.0.1-1) unstable; urgency=low
 
