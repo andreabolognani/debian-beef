@@ -12,11 +12,11 @@ include /usr/share/dpkg/buildflags.mk
 # The build system is completely regenerated to ensure the tools used to
 # build the binary package are the ones shipped with Debian.
 override_dh_auto_configure:
-	libtoolize -f -c
+	libtoolize -f
 	aclocal
 	autoheader -f
 	autoconf -f
-	automake -f -a -c --foreign
+	automake -f -a --foreign
 	dh_auto_configure -- \
 	                  --disable-silent-rules
 
