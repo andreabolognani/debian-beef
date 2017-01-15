@@ -2,6 +2,10 @@ beef (1.0.2-1) unstable; urgency=low
 
   * New upstream release
 
+  * debhelper
+    - Switch to compat level 10
+      - Parallel builds are now supported
+
   * Security
     - Enable +bindnow hardening option
     - Use HTTPS wherever possible
@@ -10,7 +14,7 @@ beef (1.0.2-1) unstable; urgency=low
     - Update Standards-Version to 3.9.8
       - No changes needed
 
- -- Andrea Bolognani <eof@kiyuko.org>  Sun, 15 Jan 2017 19:56:47 +0100
+ -- Andrea Bolognani <eof@kiyuko.org>  Sun, 15 Jan 2017 20:12:25 +0100
 
 beef (1.0.1-1) unstable; urgency=low
 
