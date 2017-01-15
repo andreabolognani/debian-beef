@@ -4,11 +4,11 @@ Upstream-Contact: Andrea Bolognani <eof@kiyuko.org>
 Source: http://kiyuko.org/software/beef
 
 Files: *
-Copyright: 2005-2014, Andrea Bolognani <eof@kiyuko.org>
+Copyright: 2005-2017, Andrea Bolognani <eof@kiyuko.org>
 License: GPL-2+
 
 Files: debian/*
-Copyright: 2006-2014, Andrea Bolognani <eof@kiyuko.org>
+Copyright: 2006-2017, Andrea Bolognani <eof@kiyuko.org>
 License: GPL-2+
 
 License: GPL-2+
