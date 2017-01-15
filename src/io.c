@@ -1,5 +1,5 @@
 /* Beef - Flexible Brainfuck interpreter
- * Copyright (C) 2005-2014  Andrea Bolognani <eof@kiyuko.org>
+ * Copyright (C) 2005-2017  Andrea Bolognani <eof@kiyuko.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,12 @@
  * Homepage: http://kiyuko.org/software/beef
  */
 
+/* Remove once readline 7.0, which (correctly) includes
+ * the header itself, is common enough */
+#include <stdio.h>
 #include <readline/readline.h>
 #include <stdlib.h>
+#include <string.h>
 #include "io.h"
 
 /**
@@ -50,7 +54,6 @@ static void
 prompt_append (gint8 c)
 {
 	gchar  *temp;
-	gulong  i;
 
 	if (prompt == NULL)
 	{
@@ -65,10 +68,8 @@ prompt_append (gint8 c)
 		/* The buffer needs to be extended */
 		temp = (gchar *) g_slice_alloc (prompt_length + PROMPT_BUFFER_SIZE);
 
-		for (i = 0; i < prompt_length; i++)
-		{
-			temp[i] = prompt[i];
-		}
+		/* Copy existing data */
+		memcpy (temp, prompt, prompt_length * sizeof (gint8));
 
 		if (prompt != NULL)
 		{
@@ -159,7 +160,7 @@ load_file_contents (GFile   *file,
 	}
 
 	contents = cattle_buffer_new (size);
-	cattle_buffer_set_contents (contents, start);
+	cattle_buffer_set_contents (contents, (gint8 *) start);
 
 	g_free (buffer);
 
@@ -172,14 +173,13 @@ load_file_contents (GFile   *file,
  * Dump interpreter's output to a GOutputStream.
  */
 gboolean
-output_handler (CattleInterpreter  *interpreter,
+output_handler (CattleInterpreter  *interpreter G_GNUC_UNUSED,
                 gint8               output,
                 gpointer            data,
                 GError            **error)
 {
 	GOutputStream *stream;
 	GError        *inner_error;
-	gchar         *temp;
 
 	if (G_IS_OUTPUT_STREAM (data))
 	{
@@ -256,7 +256,7 @@ input_handler (CattleInterpreter  *interpreter,
 
 	/* Copy the input to a CattleBuffer */
 	input = cattle_buffer_new (size);
-	cattle_buffer_set_contents (input, buffer);
+	cattle_buffer_set_contents (input, (gint8 *) buffer);
 
 	/* Feed the interpreter with the new input */
 	cattle_interpreter_feed (interpreter, input);
@@ -273,8 +273,8 @@ input_handler (CattleInterpreter  *interpreter,
  */
 gboolean
 input_handler_interactive (CattleInterpreter  *interpreter,
-                           gpointer            data,
-                           GError            **error)
+                           gpointer            data G_GNUC_UNUSED,
+                           GError            **error G_GNUC_UNUSED)
 {
 	CattleBuffer *input;
 	gchar        *buffer;
@@ -302,7 +302,7 @@ input_handler_interactive (CattleInterpreter  *interpreter,
 		/* Copy the input, overwriting the trailing null byte
 		 * with the newline that's been stripped by readline */
 		input = cattle_buffer_new (size);
-		cattle_buffer_set_contents (input, buffer);
+		cattle_buffer_set_contents (input, (gint8 *) buffer);
 		cattle_buffer_set_value (input, size - 1, '\n');
 
 		free (buffer);

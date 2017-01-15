@@ -1,5 +1,5 @@
 /* Beef - Flexible Brainfuck interpreter
- * Copyright (C) 2005-2014  Andrea Bolognani <eof@kiyuko.org>
+ * Copyright (C) 2005-2017  Andrea Bolognani <eof@kiyuko.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,9 @@
 #include <glib-object.h>
 #include <gio/gio.h>
 #include <cattle/cattle.h>
+/* Remove once readline 7.0, which (correctly) includes
+ * the header itself, is common enough */
+#include <stdio.h>
 #include <readline/readline.h>
 #include <config.h>
 #include <unistd.h>
