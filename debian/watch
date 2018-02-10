@@ -1,4 +1,7 @@
-version=3
-opts=filenamemangle=s/^\/software\/beef\/releases\/(.+)\/source$/beef-$1\.tar\.gz/ \
-http://kiyuko.org/software/beef/releases \
-	/software/beef/releases/(.+)/source
+version=4
+opts=\
+filenamemangle=s/^.*\/@ANY_VERSION@\/.*$/beef-$1.tar.gz/,\
+pgpsigurlmangle=s/^(.*)\/source$/$1\/signature/ \
+\
+https://kiyuko.org/software/beef/releases \
+^/software/beef/releases/@ANY_VERSION@/source$
