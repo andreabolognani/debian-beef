@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Setup
+
+echo "# Generating test program"
+echo '+[--------->++<]>+.------.++.----.------.>++++++++++.' >smoke.bf
+
+# Test
+
+echo "# Running beef"
+beef smoke.bf >beef.log 2>&1
+
+echo "# Checking result"
+test "$(cat beef.log)" = "smoke"
+rc=$?
+
+# Teardown
+
+test "$rc" -eq 0 || {
+    cat beef.log >&2
+}
+
+exit $rc
