@@ -2,7 +2,7 @@ Source: beef
 Section: devel
 Priority: optional
 Maintainer: Andrea Bolognani <eof@kiyuko.org>
-Build-Depends: debhelper (>= 10),
+Build-Depends: debhelper (>= 11),
                autoconf,
                automake,
                libtool,
