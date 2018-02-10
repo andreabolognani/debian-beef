@@ -26,7 +26,7 @@ Description: flexible Brainfuck interpreter
  Beef is an interpreter for the Brainfuck programming language.
  .
  Its main goals are to be comfortable for the user and to run most
- Brainfuck programs unchanged; speed is generally quite good. 
+ Brainfuck programs unchanged; speed is generally quite good.
  .
  Beef performs thorough error checking to make sure malformed programs are
  not executed; it also supports a bunch of command-line options that can be
