@@ -1,9 +1,12 @@
 beef (1.0.2-2) unstable; urgency=low
 
+  * Security
+    - Use https:// for upstream URLs
+
   * Other
     - Point Vcs-*: to salsa.debian.org
 
- -- Andrea Bolognani <eof@kiyuko.org>  Tue, 06 Feb 2018 20:00:38 +0100
+ -- Andrea Bolognani <eof@kiyuko.org>  Sat, 10 Feb 2018 14:21:14 +0100
 
 beef (1.0.2-1) unstable; urgency=low
 
