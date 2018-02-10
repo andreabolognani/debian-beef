@@ -27,6 +27,13 @@ override_dh_auto_configure:
 	dh_auto_configure -- \
 	                  --disable-silent-rules
 
+# Install changelogs.
+#
+# Upstream's NEWS.markdown is much more useful to end users than
+# upstream's ChangeLog, so install that as changelog instead.
+override_dh_installchangelogs:
+	dh_installchangelogs NEWS.markdown
+
 # Rebuild the patches series by looking at the contents of the
 # debian/patches directory.
 #
