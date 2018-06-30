@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Beef
 Upstream-Contact: Andrea Bolognani <eof@kiyuko.org>
-Source: https://kiyuko.org/software/beef
+Source: https://kiyuko.org/software/beef/releases
 
 Files: *
 Copyright: 2005-2017, Andrea Bolognani <eof@kiyuko.org>
