@@ -7,8 +7,9 @@ beef (1.0.2-3) unstable; urgency=low
   * Other
     - Update Standards-Version to 4.1.4
       - No changes needed
+    - Adapt watch file to new download URLs
 
- -- Andrea Bolognani <eof@kiyuko.org>  Wed, 27 Jun 2018 22:23:40 +0200
+ -- Andrea Bolognani <eof@kiyuko.org>  Sat, 30 Jun 2018 20:21:24 +0200
 
 beef (1.0.2-2) unstable; urgency=low
 
