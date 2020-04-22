@@ -1,3 +1,9 @@
+beef (1.2.0-1) UNRELEASED; urgency=medium
+
+  * New upstream release
+
+ -- Andrea Bolognani <eof@kiyuko.org>  Wed, 22 Apr 2020 22:55:48 +0200
+
 beef (1.0.2-3) unstable; urgency=low
 
   * Package relationships
