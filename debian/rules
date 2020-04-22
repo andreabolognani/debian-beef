@@ -6,9 +6,10 @@ DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
 DESTDIR = $(CURDIR)/debian/tmp
+BUILDDIR = $(CURDIR)/debian/build
 
 %:
-	dh $@
+	dh $@ --builddir $(BUILDDIR)
 
 # Refresh the build system.
 #
