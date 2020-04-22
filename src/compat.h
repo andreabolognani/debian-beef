@@ -17,32 +17,24 @@
  * Homepage: https://kiyuko.org/software/beef
  */
 
-#ifndef __OPTIONS_H__
-#define __OPTIONS_H__
+#ifndef __COMPAT_H__
+#define __COMPAT_H__
 
 #include <glib.h>
+#include <glib-object.h>
 #include <cattle/cattle.h>
 
 G_BEGIN_DECLS
 
-typedef struct _OptionValues OptionValues;
-
-struct _OptionValues
-{
-    CattleConfiguration *configuration;
-    gchar               *program;
-    gchar               *program_filename;
-    gchar               *output_filename;
-    gchar               *input_filename;
-};
-
-OptionValues* option_values_new  (void);
-void          option_values_free (OptionValues *option_values);
-
-G_DEFINE_AUTOPTR_CLEANUP_FUNC (OptionValues, option_values_free);
-
-GOptionEntry* get_option_entries (void);
+#if !CATTLE_CHECK_VERSION(1, 4, 0)
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (CattleBuffer, g_object_unref);
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (CattleConfiguration, g_object_unref);
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (CattleInstruction, g_object_unref);
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (CattleInterpreter, g_object_unref);
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (CattleProgram, g_object_unref);
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (CattleTape, g_object_unref);
+#endif
 
 G_END_DECLS
 
-#endif /* __OPTIONS_H__ */
+#endif /* __COMPAT_H__ */

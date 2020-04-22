@@ -1,5 +1,5 @@
 /* Beef - Flexible Brainfuck interpreter
- * Copyright (C) 2005-2017  Andrea Bolognani <eof@kiyuko.org>
+ * Copyright (C) 2005-2020  Andrea Bolognani <eof@kiyuko.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,10 +12,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
- * Homepage: http://kiyuko.org/software/beef
+ * Homepage: https://kiyuko.org/software/beef
  */
 
 /* Remove once readline 7.0, which (correctly) includes
@@ -24,6 +23,7 @@
 #include <readline/readline.h>
 #include <stdlib.h>
 #include <string.h>
+#include "compat.h"
 #include "io.h"
 
 /**
@@ -53,48 +53,48 @@ static gulong  prompt_length = 0;
 static void
 prompt_append (gint8 c)
 {
-	gchar  *temp;
+    gchar  *temp;
 
-	if (prompt == NULL)
-	{
-		/* First use.
-		 * Allocate a small buffer */
-		prompt = (gchar *) g_slice_alloc (PROMPT_BUFFER_SIZE);
-		prompt_length = PROMPT_BUFFER_SIZE;
-	}
+    if (prompt == NULL)
+    {
+        /* First use.
+         * Allocate a small buffer */
+        prompt = (gchar *) g_slice_alloc (PROMPT_BUFFER_SIZE);
+        prompt_length = PROMPT_BUFFER_SIZE;
+    }
 
-	if (prompt_cursor > prompt_length - 2)
-	{
-		/* The buffer needs to be extended */
-		temp = (gchar *) g_slice_alloc (prompt_length + PROMPT_BUFFER_SIZE);
+    if (prompt_cursor > prompt_length - 2)
+    {
+        /* The buffer needs to be extended */
+        temp = (gchar *) g_slice_alloc (prompt_length + PROMPT_BUFFER_SIZE);
 
-		/* Copy existing data */
-		memcpy (temp, prompt, prompt_length * sizeof (gint8));
+        /* Copy existing data */
+        memcpy (temp, prompt, prompt_length * sizeof (gint8));
 
-		if (prompt != NULL)
-		{
-			g_slice_free1 (prompt_length, prompt);
-		}
+        if (prompt != NULL)
+        {
+            g_slice_free1 (prompt_length, prompt);
+        }
 
-		prompt = temp;
-		prompt_length += PROMPT_BUFFER_SIZE;
-	}
+        prompt = temp;
+        prompt_length += PROMPT_BUFFER_SIZE;
+    }
 
-	prompt[prompt_cursor] = c;
-	prompt[prompt_cursor + 1] = '\0';
+    prompt[prompt_cursor] = c;
+    prompt[prompt_cursor + 1] = '\0';
 
-	prompt_cursor++;
+    prompt_cursor++;
 }
 
 static void
 prompt_reset (void)
 {
-	if (prompt != NULL)
-	{
-		prompt[0] = '\0';
-	}
+    if (prompt != NULL)
+    {
+        prompt[0] = '\0';
+    }
 
-	prompt_cursor = 0;
+    prompt_cursor = 0;
 }
 
 /**
@@ -111,66 +111,64 @@ CattleBuffer*
 load_file_contents (GFile   *file,
                     GError **error)
 {
-	CattleBuffer *contents;
-	GError       *inner_error;
-	gchar        *buffer;
-	gchar        *start;
-	gsize         size;
-	gboolean      success;
+    CattleBuffer     *contents;
+    GError           *inner_error;
+    g_autofree gchar *buffer;
+    gchar            *start;
+    gsize             size;
+    gboolean          success;
 
-	g_return_val_if_fail (G_IS_FILE (file), NULL);
-	g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+    g_return_val_if_fail (G_IS_FILE (file), NULL);
+    g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-	/* Load file contents */
-	inner_error = NULL;
-	success = g_file_load_contents (file,
-	                                NULL,
-	                                &buffer,
-	                                &size,
-	                                NULL, /* No etag */
-	                                &inner_error);
+    /* Load file contents */
+    inner_error = NULL;
+    success = g_file_load_contents (file,
+                                    NULL,
+                                    &buffer,
+                                    &size,
+                                    NULL, /* No etag */
+                                    &inner_error);
 
-	if (!success)
-	{
-		g_propagate_error (error,
-		                   inner_error);
+    if (!success)
+    {
+        g_propagate_error (error,
+                           inner_error);
 
-		return NULL;
-	}
+        return NULL;
+    }
 
-	/* Mark the start of the input */
-	start = buffer;
+    /* Mark the start of the input */
+    start = buffer;
 
-	/* Detect and handle magic bytes */
-	if (size > 2)
-	{
-		if (buffer[0] == '#' && buffer[1] == '!')
-		{
-			/* Look for the first newline */
-			while (size > 0 && start[0] != '\n')
-			{
-				start++;
-				size--;
-			}
+    /* Detect and handle magic bytes */
+    if (size > 2)
+    {
+        if (buffer[0] == '#' && buffer[1] == '!')
+        {
+            /* Look for the first newline */
+            while (size > 0 && start[0] != '\n')
+            {
+                start++;
+                size--;
+            }
 
-			/* Move past it */
-			start++;
-			size--;
-		}
-	}
+            /* Move past it */
+            start++;
+            size--;
+        }
+    }
 
-	contents = cattle_buffer_new (size);
-	cattle_buffer_set_contents (contents, (gint8 *) start);
+    contents = cattle_buffer_new (size);
+    cattle_buffer_set_contents (contents, (gint8 *) start);
 
-	g_free (buffer);
-
-	return contents;
+    return contents;
 }
 
 /**
  * output_handler:
  *
- * Dump interpreter's output to a GOutputStream.
+ * Dump interpreter's output to a #GOutputStream.
  */
 gboolean
 output_handler (CattleInterpreter  *interpreter G_GNUC_UNUSED,
@@ -178,92 +176,90 @@ output_handler (CattleInterpreter  *interpreter G_GNUC_UNUSED,
                 gpointer            data,
                 GError            **error)
 {
-	GOutputStream *stream;
-	GError        *inner_error;
+    GOutputStream *stream;
+    GError        *inner_error;
 
-	if (G_IS_OUTPUT_STREAM (data))
-	{
-		/* Writing to a file: get the stream */
-		stream = G_OUTPUT_STREAM (data);
+    if (G_IS_OUTPUT_STREAM (data))
+    {
+        /* Writing to a file: get the stream */
+        stream = G_OUTPUT_STREAM (data);
 
-		inner_error = NULL;
-		g_output_stream_write (stream,
-		                       &output,
-		                       1,
-		                       NULL,
-		                       &inner_error);
+        inner_error = NULL;
+        g_output_stream_write (stream,
+                               &output,
+                               1,
+                               NULL,
+                               &inner_error);
 
-		if (inner_error != NULL) {
+        if (inner_error != NULL) {
 
-			g_propagate_error (error,
-			                   inner_error);
+            g_propagate_error (error,
+                               inner_error);
 
-			return FALSE;
-		}
-	}
-	else
-	{
-		/* Write to standard output */
-		g_print ("%c", output);
-	}
+            return FALSE;
+        }
+    }
+    else
+    {
+        /* Write to standard output */
+        g_print ("%c", output);
+    }
 
-	/* Update the prompt */
+    /* Update the prompt */
 
-	if (output != '\n')
-	{
-		prompt_append (output);
-	}
-	else
-	{
-		prompt_reset ();
-	}
+    if (output != '\n')
+    {
+        prompt_append (output);
+    }
+    else
+    {
+        prompt_reset ();
+    }
 
-	return TRUE;
+    return TRUE;
 }
 
 /**
  * input_handler:
  *
- * Read interpreter's input from a GInputStream.
+ * Read interpreter's input from a #GInputStream.
  */
 gboolean
 input_handler (CattleInterpreter  *interpreter,
                gpointer            data,
                GError            **error)
 {
-	CattleBuffer *input;
-	GInputStream *stream;
-	GError       *inner_error;
-	gchar         buffer[INPUT_BUFFER_SIZE];
-	gssize        size;
+    g_autoptr (CattleBuffer)  input = NULL;
+    GInputStream             *stream;
+    GError                   *inner_error;
+    gchar                     buffer[INPUT_BUFFER_SIZE];
+    gssize                    size;
 
-	stream = G_INPUT_STREAM (data);
+    stream = G_INPUT_STREAM (data);
 
-	inner_error = NULL;
-	size = g_input_stream_read (stream,
-	                            buffer,
-	                            INPUT_BUFFER_SIZE,
-	                            NULL,
-	                            &inner_error);
+    inner_error = NULL;
+    size = g_input_stream_read (stream,
+                                buffer,
+                                INPUT_BUFFER_SIZE,
+                                NULL,
+                                &inner_error);
 
-	if (inner_error != NULL)
-	{
-		g_propagate_error (error,
-		                   inner_error);
+    if (inner_error != NULL)
+    {
+        g_propagate_error (error,
+                           inner_error);
 
-		return FALSE;
-	}
+        return FALSE;
+    }
 
-	/* Copy the input to a CattleBuffer */
-	input = cattle_buffer_new (size);
-	cattle_buffer_set_contents (input, (gint8 *) buffer);
+    /* Copy the input to a CattleBuffer */
+    input = cattle_buffer_new (size);
+    cattle_buffer_set_contents (input, (gint8 *) buffer);
 
-	/* Feed the interpreter with the new input */
-	cattle_interpreter_feed (interpreter, input);
+    /* Feed the interpreter with the new input */
+    cattle_interpreter_feed (interpreter, input);
 
-	g_object_unref (input);
-
-	return TRUE;
+    return TRUE;
 }
 
 /**
@@ -276,42 +272,40 @@ input_handler_interactive (CattleInterpreter  *interpreter,
                            gpointer            data G_GNUC_UNUSED,
                            GError            **error G_GNUC_UNUSED)
 {
-	CattleBuffer *input;
-	gchar        *buffer;
-	gulong        size;
+    g_autoptr (CattleBuffer)  input = NULL;
+    gchar                    *buffer;
+    gulong                    size;
 
-	/* Use readline to fetch user input. readline is notified of
-	 * the fact that it should not handle the prompt itself, as there
-	 * is actually no prompt, but there could be some program output */
-	rl_already_prompted = 1;
-	buffer = readline (prompt);
+    /* Use readline to fetch user input. readline is notified of
+     * the fact that it should not handle the prompt itself, as there
+     * is actually no prompt, but there could be some program output */
+    rl_already_prompted = 1;
+    buffer = readline (prompt);
 
-	/* Reset prompt after input, because the cursor is certainly at
-	 * the beginning of a new line */
-	prompt_reset ();
+    /* Reset prompt after input, because the cursor is certainly at
+     * the beginning of a new line */
+    prompt_reset ();
 
-	if (buffer == NULL)
-	{
-		input = cattle_buffer_new (0);
-	}
-	else
-	{
-		/* Size of the input */
-		size = strlen (buffer) + 1;
+    if (buffer == NULL)
+    {
+        input = cattle_buffer_new (0);
+    }
+    else
+    {
+        /* Size of the input */
+        size = strlen (buffer) + 1;
 
-		/* Copy the input, overwriting the trailing null byte
-		 * with the newline that's been stripped by readline */
-		input = cattle_buffer_new (size);
-		cattle_buffer_set_contents (input, (gint8 *) buffer);
-		cattle_buffer_set_value (input, size - 1, '\n');
+        /* Copy the input, overwriting the trailing null byte
+         * with the newline that's been stripped by readline */
+        input = cattle_buffer_new (size);
+        cattle_buffer_set_contents (input, (gint8 *) buffer);
+        cattle_buffer_set_value (input, size - 1, '\n');
 
-		free (buffer);
-	}
+        free (buffer);
+    }
 
-	/* Feed the interpreter with the new input */
-	cattle_interpreter_feed (interpreter, input);
+    /* Feed the interpreter with the new input */
+    cattle_interpreter_feed (interpreter, input);
 
-	g_object_unref (input);
-
-	return TRUE;
+    return TRUE;
 }

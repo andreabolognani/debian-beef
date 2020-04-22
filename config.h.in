@@ -1,5 +1,9 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Define to 1 if you have the declaration of `rl_completion_quote_character',
+   and to 0 if you don't. */
+#undef HAVE_DECL_RL_COMPLETION_QUOTE_CHARACTER
+
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
 
