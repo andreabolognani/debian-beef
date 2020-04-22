@@ -11,17 +11,6 @@ BUILDDIR = $(CURDIR)/debian/build
 %:
 	dh $@ --builddir $(BUILDDIR)
 
-# Refresh the build system.
-#
-# The build system is completely regenerated to ensure the tools used to
-# build the binary package are the ones shipped with Debian.
-override_dh_autoreconf:
-	libtoolize -f
-	aclocal
-	autoheader -f
-	autoconf -f
-	automake -f -a --foreign
-
 # Prepare files.
 #
 # The upstream build system mostly does the right thing, but we still
