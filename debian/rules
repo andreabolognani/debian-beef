@@ -5,6 +5,8 @@ DEB_BUILD_MAINT_OPTIONS = hardening=+bindnow
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 
+DESTDIR = $(CURDIR)/debian/tmp
+
 %:
 	dh $@
 
@@ -26,7 +28,7 @@ override_dh_autoreconf:
 # build system too much. dh_install and friends will later pick up the
 # interesting stuff.
 override_dh_auto_install:
-	dh_auto_install --destdir=debian/tmp
+	dh_auto_install --destdir $(DESTDIR)
 
 # Install changelogs.
 #
