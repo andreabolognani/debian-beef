@@ -7,10 +7,10 @@ Build-Depends: debhelper-compat (= 12),
                automake,
                libtool,
                pkg-config,
-               pandoc,
                libglib2.0-dev,
                libcattle-1.0-dev (>= 1.2.0),
-               libreadline-dev
+               libreadline-dev,
+               python3-docutils
 Standards-Version: 4.1.4
 Rules-Requires-Root: no
 Homepage: https://kiyuko.org/software/beef
