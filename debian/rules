@@ -22,18 +22,12 @@ override_dh_autoreconf:
 	autoconf -f
 	automake -f -a --foreign
 
-# Install files.
+# Prepare files.
 #
-# We use debian/tmp as a staging area so that we can skip files we don't
-# want ending up in the package without having to mess with the upstream
-# build system too much. dh_install and friends will later pick up the
-# interesting stuff.
+# The upstream build system mostly does the right thing, but we still
+# want to move some files around to make things easier for debhelper
+# tools that are called later.
 override_dh_auto_install:
 	dh_auto_install --destdir $(DESTDIR)
-
-# Install changelogs.
-#
-# Upstream's NEWS.markdown is much more useful to end users than
-# upstream's ChangeLog, so install that as changelog instead.
-override_dh_installchangelogs:
-	dh_installchangelogs NEWS.markdown
+	mv $(DESTDIR)/usr/share/doc/beef/NEWS.rst \
+	   $(DESTDIR)/usr/share/doc/beef/NEWS
