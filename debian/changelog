@@ -1,6 +1,16 @@
-beef (1.2.0-1) UNRELEASED; urgency=medium
+beef (1.2.0-1) unstable; urgency=medium
 
   * New upstream release
+
+  * Patches
+    + Drop D01-tweak-build-system.diff
+      - No longer needed
+
+  * debhelper
+    + Switch to compat level 12
+
+  * Other
+    + Update Standards-Version to 4.5.0
 
  -- Andrea Bolognani <eof@kiyuko.org>  Wed, 22 Apr 2020 22:55:48 +0200
 
