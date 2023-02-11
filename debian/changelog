@@ -1,3 +1,13 @@
+beef (1.2.0-2) unstable; urgency=medium
+
+  * debhelper
+    + Switch to compat level 13
+
+  * Standards-Version
+    + Update to 4.6.2
+
+ -- Andrea Bolognani <eof@kiyuko.org>  Sat, 11 Feb 2023 18:59:28 +0100
+
 beef (1.2.0-1) unstable; urgency=medium
 
   * New upstream release
