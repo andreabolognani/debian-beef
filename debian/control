@@ -8,7 +8,7 @@ Build-Depends: debhelper-compat (= 13),
                libtool,
                pkg-config,
                libglib2.0-dev,
-               libcattle-1.0-dev (>= 1.2.0),
+               libcattle-1.0-dev,
                libreadline-dev,
                python3-docutils
 Standards-Version: 4.5.0
